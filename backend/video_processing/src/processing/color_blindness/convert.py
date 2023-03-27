@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from .color_blindness_types import ColorBlindnessTypes
+from pb.video_processing_pb2 import ColorBlindnessType
 
 
 def lms_to_rgb():
@@ -14,8 +14,8 @@ def lms_to_rgb():
     ).T
 
 
-def to_new_rgb(image, color_blindness_name: str):
-    multiply = np.dot(load_lms(image), rgb_to_cvd_lms(color_blindness_name))
+def to_new_rgb(image, color_blindness_type: ColorBlindnessType):
+    multiply = np.dot(load_lms(image), rgb_to_cvd_lms(color_blindness_type))
     return np.uint8(np.dot(multiply, lms_to_rgb()) * 255)
 
 
@@ -37,14 +37,13 @@ def to_tritanopic_lms(degree: float = 1.0):
     ).T
 
 
-def rgb_to_cvd_lms(color_blindness_name: str):
-    color_blindness_type = ColorBlindnessTypes[color_blindness_name.upper()]
+def rgb_to_cvd_lms(color_blindness_type: ColorBlindnessType):
     match color_blindness_type:
-        case ColorBlindnessTypes.PROTANOPIA:
+        case ColorBlindnessType.PROTANOPIA:
             return to_protanopic_lms(1)
-        case ColorBlindnessTypes.DEUTERANOPIA:
+        case ColorBlindnessType.DEUTERANOPIA:
             return to_deuteranopic_lms(1)
-        case ColorBlindnessTypes.TRITANOPIA:
+        case ColorBlindnessType.TRITANOPIA:
             return to_tritanopic_lms(1)
 
 
