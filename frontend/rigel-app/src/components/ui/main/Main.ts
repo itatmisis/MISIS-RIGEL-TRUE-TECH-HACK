@@ -10,7 +10,7 @@ export const Main = styled.main`
     align-items: center;
     flex-wrap: wrap;
         position: relative;
-    gap: ${(props) => props.theme.sizes.padding};
+    gap: 5em;
         margin-top: 20px;
         `;
 
