@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package pb;
+
+enum ColorBlindnessType {
+    PROTANOPIA = 0;
+    DEUTERANOPIA = 1;
+    TRITANOPIA= 2;
+}
+
+enum TaskType {
+    EPILEPSY = 0;
+    COLOR_BLINDNESS = 1;
+    EPILEPSY_AND_COLOR_BLINDNESS = 2;
+}
+
+message SegmentRequest {
+    string filename = 1;
+    int64 number = 2;
+    TaskType taskType = 3;
+    optional ColorBlindnessType colorBlindnessType = 4;
+    optional float degree = 5;
+}
+
+message SegmentResponse {
+    string filename = 2;
+    bytes segment = 1;
+}
+
+message VideoMetadataRequest {
+    string filename = 1;
+}
+
+message VideoMetadataResponse {
+    string filename = 2;
+    bytes videoMetadata = 1;
+}
