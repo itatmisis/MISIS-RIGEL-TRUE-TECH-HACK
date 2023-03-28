@@ -6,18 +6,8 @@ const menuItems = [
     {
         title: 'Главная',
         path: '/',
-        id: 1
+        id: 1,
     },
-    {
-        title: 'Телеканалы',
-        path: '/channels',
-        id: 2
-    },
-    {
-        title: 'Фильмы',
-        path: '/movies',
-        id: 3
-    }
 ]
 
 
@@ -43,9 +33,6 @@ const Header = () => {
                     <MenuItem key={item.id} isActive={item.path === window.location.pathname}>{item.title}</MenuItem>)
                 )}
             </Menu>
-            <Link to={'/settings'} style={{textDecoration: 'none'}}>
-            <Profile/>
-            </Link>
         </HeaderContainer>
 )
 }
@@ -64,8 +51,7 @@ const HeaderContainer = styled.header`
     `
 
 const Logo = styled.img`
-    width: 5em;
-    height: auto;
+    height: 1.3em;
     `
 
 const Menu = styled.nav`

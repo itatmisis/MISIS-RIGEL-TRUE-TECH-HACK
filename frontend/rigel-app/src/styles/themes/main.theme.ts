@@ -1,5 +1,3 @@
-
-
 export const theme = {
     colors: {
         background: '#FFFFFF',
@@ -12,13 +10,16 @@ export const theme = {
     },
     sizes: {
         font: '16px',
+        bigFont: '24px',
         borderRadius: '12px',
+        cardBorderRadius: '24px',
         padding: '8px',
         icon: '24px',
-        contentWidth: '1220px',
+        contentWidth: '1168px',
+        cardPadding: '36px',
     },
     fonts: {
-        family: 'Roboto, sans-serif',
+        family: 'Inter, sans-serif',
         weight: {
             light: 300,
             normal: 400,

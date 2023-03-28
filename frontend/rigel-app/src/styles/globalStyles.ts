@@ -1,7 +1,7 @@
 import {createGlobalStyle} from "styled-components";
 import {theme} from "./themes/main.theme";
 export const GlobalStyles = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap');
   
     * {
         box-sizing: border-box;
@@ -23,7 +23,13 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${theme.colors.background};
         min-height: 100vh;
         min-width: 100vw;
+        scroll-behavior: smooth;
     }
+      
+      button {
+        border: none;
+        cursor: pointer;
+      }
     
     }`;
         
