@@ -5,8 +5,7 @@ from constants import ME_CONFIG_MONGODB_URL
 
 class Database:
     def __init__(self):
-        self.connection_url = ME_CONFIG_MONGODB_URL
-        self.client = MongoClient(self.connection_url)
+        self.client = MongoClient(MONGO_SETTINGS["MONGO_HOST"], MONGO_SETTINGS["MONGO_PORT"])
         self.database_name = "segment_database"
         self.database = self.client[self.database_name]
         self.collection_name = "video"
@@ -14,7 +13,12 @@ class Database:
 
     def update_m3u8(self, original_filename, directory):
         m3u8_in_bytes = read_m3u8(original_filename, directory)
-        self.collection.insert(m3u8_in_bytes)
+        self.collection.insert_many(m3u8_in_bytes)
+
+        print({"original_filename": m3u8_in_bytes[0]["original_filename"], "filename": m3u8_in_bytes[0]["filename"]})
+        print(self.collection.find_one(
+            {"original_filename": m3u8_in_bytes[0]["original_filename"], "filename": m3u8_in_bytes[0]["filename"]}
+        ))
 
     def update_segments(self, original_filename, directory):
         segments_in_bytes = read_segments(original_filename, directory)

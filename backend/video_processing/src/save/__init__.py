@@ -1,6 +1,6 @@
-from .save import SaveVideo, TemporaryStorage
+from .save import get_images_from_segment, TemporaryStorage
 
 __all__ = [
     TemporaryStorage,
-    SaveVideo,
+    get_images_from_segment,
 ]

@@ -1,16 +1,38 @@
 package broker
 
 import (
-	"github.com/confluentinc/confluent-kafka-go/kafka"
-	"github.com/izveigor/TRUE-TECH-HACK/pkg/config"
+	"context"
+	"time"
+
+	"github.com/segmentio/kafka-go"
 )
 
-var Producer = kafka.NewProducer(&kafka.ConfigMap{
-	"bootstrap.servers": config.VideoProcessingHost + ":" + config.VideoProcessingPort,
-	"client.id":         socket.gethostname(),
-	"acks":              "all",
-})
+var writer *kafka.Writer
 
-func getMessage() {
+func InitWriter(kafkaBrokerUrls []string, clientId string, topic string) (w *kafka.Writer, err error) {
+	dialer := &kafka.Dialer{
+		Timeout:  10 * time.Second,
+		ClientID: clientId,
+	}
 
+	config := kafka.WriterConfig{
+		Brokers:      kafkaBrokerUrls,
+		Topic:        topic,
+		Balancer:     &kafka.LeastBytes{},
+		Dialer:       dialer,
+		WriteTimeout: 10 * time.Second,
+		ReadTimeout:  10 * time.Second,
+	}
+	w = kafka.NewWriter(config)
+	writer = w
+	return w, nil
+}
+
+func Push(parent context.Context, key string, value []byte) (err error) {
+	message := kafka.Message{
+		Key:   []byte(key),
+		Value: value,
+		Time:  time.Now(),
+	}
+	return writer.WriteMessages(parent, message)
 }

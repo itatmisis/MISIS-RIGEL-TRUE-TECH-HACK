@@ -8,12 +8,14 @@ import (
 )
 
 type ConfigType struct {
-	VideoReceivingTopic string `mapstructure:"VIDEO_RECEIVING_TOPIC"`
-	VideoProcessingHost string `mapstructure:"VIDEO_PROCESSING_HOST"`
-	VideoProcessingPort string `mapstructure:"VIDEO_PROCESSING_PORT"`
+	KafkaVideoReceivingTopic  string `mapstructure:"KAFKA_VIDEO_RECEIVING_TOPIC"`
+	KafkaVideoProcessingTopic string `mapstructure:"KAFKA_VIDEO_PROCESSING_TOPIC"`
+	KafkaVideoHost            string `mapstructure:"KAFKA_VIDEO_HOST"`
+	KafkaVideoGroupId         string `mapstructure:"KAFKA_VIDEO_GROUP_ID"`
+	KafkaVideoPort            int    `mapstructure:"KAFKA_VIDEO_PORT"`
 
 	PostgresHost     string `mapstructure:"POSTGRES_HOST"`
-	PostgresPort     int    `mapstructure:"POSTGRES_PASSWORD"`
+	PostgresPort     int    `mapstructure:"POSTGRES_PORT"`
 	PostgresPassword string `mapstructure:"POSTGRES_PASSWORD"`
 	PostgresUser     string `mapstructure:"POSTGRES_USER"`
 	PostgresDb       string `mapstructure:"POSTGRES_DB"`
