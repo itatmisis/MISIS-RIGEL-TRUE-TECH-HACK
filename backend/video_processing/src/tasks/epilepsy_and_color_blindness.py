@@ -1,4 +1,4 @@
-from pb.video_processing_pb2 import ColorBlindnessType
+from pb.video_receiving_pb2 import ColorBlindnessType
 
 from .color_blindness import color_blindness_task
 from .epilepsy import epilepsy_task

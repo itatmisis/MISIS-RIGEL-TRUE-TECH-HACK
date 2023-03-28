@@ -1,6 +1,6 @@
 from multiprocessing import Pool
 
-from adapters.producer import Producer
+from adapters.kafka.producer import Producer
 
 from constants import CORES_NUMBER
 from pb.video_receiving_pb2 import SegmentRequest
@@ -15,6 +15,7 @@ class Pipeline:
         self.storage = TemporaryStorage()
 
     def start_processing(self, request: SegmentRequest):
+        print("Начал работать")
         for image in get_images_from_segment(self.database, request):
             image_result = image
             match request.TaskType:

@@ -15,6 +15,9 @@ def write_data(database, filename):
 
 
 if __name__ == "__main__":
+    if not os.path.exists(VIDEO_DIRECTORY):
+        os.mkdir(VIDEO_DIRECTORY)
+
     database = Database()
 
     parser = argparse.ArgumentParser()

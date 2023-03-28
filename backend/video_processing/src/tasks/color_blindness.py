@@ -1,4 +1,4 @@
-from pb.video_processing_pb2 import ColorBlindnessType
+from pb.video_receiving_pb2 import ColorBlindnessType
 from processing.color_blindness import (alpha_blending, gaussian_blurring,
                                         to_new_rgb)
 

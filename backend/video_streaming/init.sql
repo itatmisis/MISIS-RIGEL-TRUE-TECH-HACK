@@ -1,0 +1,3 @@
+CREATE ROLE admin WITH PASSWORD 'password';
+CREATE DATABASE user_settings WITH OWNER admin;
+ALTER ROLE admin LOGIN;

@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package pb;
 
+option go_package = "./pkg/pb";
+
 enum ColorBlindnessType {
     PROTANOPIA = 0;
     DEUTERANOPIA = 1;
@@ -9,16 +11,17 @@ enum ColorBlindnessType {
 }
 
 enum TaskType {
-    EPILEPSY = 0;
-    COLOR_BLINDNESS = 1;
-    EPILEPSY_AND_COLOR_BLINDNESS = 2;
+    NOTHING = 0;
+    EPILEPSY = 1;
+    COLOR_BLINDNESS = 2;
+    EPILEPSY_AND_COLOR_BLINDNESS = 3;
 }
 
 message SegmentRequest {
     string filename = 1;
     int64 number = 2;
     TaskType taskType = 3;
-    ColorBlindnessType colorBlindnessType = 4;
+    optional ColorBlindnessType colorBlindnessType = 4;
 }
 
 message SegmentResponse {
