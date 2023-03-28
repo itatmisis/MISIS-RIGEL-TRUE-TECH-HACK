@@ -3,7 +3,7 @@ from enum import Enum
 from kafka import KafkaProducer
 
 from constants import KAFKA_SETTINGS
-from pb.video_receiving_pb2 import SegmentResponse, VideoMetadataResponse
+from pb.video_receiving_pb2 import Response
 from singleton import Singleton
 
 
@@ -12,27 +12,14 @@ class Producer(metaclass=Singleton):
         self.topic = KAFKA_SETTINGS["KAFKA_VIDEO_RECEIVING_TOPIC"]
         self.producer = KafkaProducer(
             bootstrap_servers=KAFKA_SETTINGS["KAFKA_SERVER"],
-            client_id=KAFKA_SETTINGS["KAFKA_VIDEO_GROUP_ID"],
             api_version=(0,11,5),
         )
 
-    def send_video_metadata(self, filename, video_metadata):
-        print(self.topic)
+    def send(self, filename, video):
         self.producer.send(
             topic=self.topic,
-            key="VideoMetadataResponse".encode('utf-8'),
-            value=VideoMetadataResponse(
+            value=Response(
                 filename=filename,
-                videoMetadata=video_metadata,
-            ).SerializeToString()
-        )
-
-    def send_segment(self, filename: str, images) -> None:
-        self.producer.send(
-            topic=self.topic,
-            key="SegmentResponse".encode('utf-8'),
-            value=SegmentResponse(
-                filename=filename,
-                segment=bytes(images),
+                video=video,
             ).SerializeToString()
         )

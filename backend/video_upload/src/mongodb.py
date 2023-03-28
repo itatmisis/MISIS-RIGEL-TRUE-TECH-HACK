@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from video_tools import read_m3u8, read_segments
-from constants import ME_CONFIG_MONGODB_URL
+from constants import MONGO_SETTINGS
 
 
 class Database:

@@ -25,17 +25,15 @@ class Consumer(metaclass=Singleton):
 
     def _start_consuming(self) -> None:
         for message in self.consumer:
-            print("Message:", message)
-            key = message.key.decode("utf-8") 
-            print(key)
+            key = message.key.decode("utf-8")
             match key:
                 case "VideoMetadataRequest":
                     video_metadata_request = VideoMetadataRequest()
                     video_metadata_request.ParseFromString(message.value)
                     original_filename = os.path.splitext(video_metadata_request.filename)[0]
-                    file_data = Database().get_byte_file(original_filename, video_metadata_request.filename)
+                    file_data = Database().get_byte_file("_".join(original_filename.split("_")[:-1]), video_metadata_request.filename)
                     print("file_data", file_data)
-                    Producer().send_video_metadata(
+                    Producer().send(
                         file_data["filename"], file_data["content"]
                     )
                 case "SegmentRequest":
