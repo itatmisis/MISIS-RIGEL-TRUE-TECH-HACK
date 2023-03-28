@@ -8,10 +8,10 @@ from constants import VIDEO_DIRECTORY
 
 
 def monitor(ffmpeg, duration, time_, time_left, process):
-    per = round(time_ / duration * 10)
+    per = round(time_ / duration * 5)
     sys.stdout.write(
         "\rTranscoding...(%s%%) %s left [%s%s]"
-        % (per, datetime.timedelta(seconds=int(time_left)), "#" * per, "-" * (10 - per))
+        % (per, datetime.timedelta(seconds=int(time_left)), "#" * per, "-" * (5 - per))
     )
     sys.stdout.flush()
 
@@ -19,10 +19,11 @@ def monitor(ffmpeg, duration, time_, time_left, process):
 def split_video_into_segments(filename):
     video = ffmpeg_streaming.input(os.path.join(VIDEO_DIRECTORY, filename))
 
-    _1080p = Representation(Size(1920, 1080), Bitrate(4096 * 1024, 320 * 1024))
+    _480p = Representation(Size(854, 480), Bitrate(750 * 1024, 192 * 1024))
 
+    # print(vars(Formats))
     hls = video.hls(Formats.h264())
-    hls.representations(_1080p)
+    hls.representations(_480p)
     hls_output_directory = os.path.join(VIDEO_DIRECTORY, os.path.splitext(filename)[0])
     if not os.path.exists(hls_output_directory):
         os.mkdir(hls_output_directory)
