@@ -1,31 +1,44 @@
-import { useState } from 'react'
 import Header from "./components/header/Header";
-import MainPage from "./pages/mainPage/MainPage";
 import {Main} from "./components/ui/main/Main";
 import Footer from "./components/footer/Footer";
-import SettingsPage from "./pages/settingsPage/settingsPage";
-import {Route, Routes} from "react-router-dom";
-import ColorsSection from "./pages/settingsPage/ColorsSection/ColorsSection";
-import VideoPage from "./pages/VideoPage/VideoPage";
+import FilmSection from "./sections/filmSection/FilmSection";
+import styled from "styled-components";
+import HelloSection from "./sections/helloSection/HelloSection";
+import SelectOptionsSection from "./sections/selectOptionsSection/SelectOptionsSection";
+import ContentSelectionSection from "./sections/contentSelectionSection/ContentSelectionSection";
+import SettingsSection from "./sections/settingsSection/SettingsSection";
+import ExtendedSettingsSection from "./sections/extendedSettingsSection/ExtendedSettingsSection";
+import {useState} from "react";
+import EpilepsySettingsSection from "./sections/epilepsySettingsSection/EpilepsySettingsSection";
 
 function App() {
+    const [selectedFilm, setSelectedFilm] = useState('')
+    const [filmUrl, setFilmUrl] = useState('')
+
   return (
       <>
         <Header/>
         <Main>
-            <Routes>
-            <Route path="/" element={<MainPage/>}/>
-            <Route path="/settings" element={<SettingsPage/>}>
-                <Route path="colors" element={<ColorsSection/>}/>
-                <Route path="*" element={<div>404</div>}/>
-            </Route>
-                <Route path="video" element={<VideoPage/>}/>
-            </Routes>
+            <HelloSection/>
+            <SelectOptionsSection/>
+            <SettingsSection/>
+            <ExtendedSettingsSection/>
+            <EpilepsySettingsSection/>
+            <ContentSelectionSection selectedFilm={selectedFilm} setSelectedFilm={setSelectedFilm}/>
+            <FilmSection filmUrl={filmUrl}/>
         </Main>
         <Footer/>
           </>
   )
 }
+
+const Section = styled.section`
+display: flex;
+flex-direction: column;
+align-items: center;
+`
+
+
 
 
 
