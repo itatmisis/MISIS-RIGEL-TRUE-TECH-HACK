@@ -5,31 +5,29 @@ import ReactPlayer from "react-player";
 import {useEffect, useRef, useState} from "react";
 import {useFilter} from "../../providers/filterProvider";
 
-const EpilepsySettingsSection = () => {
+const EpilepticsSettingSection = () => {
     const [isEpilepsy, setIsEpilepsy] = useState(false)
     const [videoTime, setVideoTime] = useState(0)
     const {getFilterEffect} = useFilter();
     const link1 = "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8"
     const link2 = `https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8`
-    //if (isEpilepsy) link2 else link1
-    //then isEilepsy = change set on playerRef videoTime
     const playerRef = useRef<ReactPlayer | null>(null)
     useEffect(() => {
-        if (playerRef.current) {
-            playerRef.current.seekTo(videoTime)
+            if (playerRef.current) {
+                playerRef.current.seekTo(videoTime)
+            }
         }
-    }
         , [isEpilepsy])
     //SET FILTER
     const filterEffect = getFilterEffect()
 
     return (
-        <Section className={"epilepsy-settings-section"}>
+        <Section className={"epileptics-settings-section"}>
             <Card>
                 <CardInfo>
                     <div>
-                        <h2>Эпилепсия</h2>
-                        <p>Индивидуальные настройки цвета, яркости и контрастности изображения</p>
+                        <h2>Безопасный режим</h2>
+                        <p>Для людей с проблемой восприятия мерцающего видеоряда</p>
                     </div>
                     <Switch onChange={() => setIsEpilepsy(!isEpilepsy)}/>
                 </CardInfo>
@@ -49,10 +47,9 @@ const EpilepsySettingsSection = () => {
                     volume={0.5}
                     style={{filter: filterEffect}}
                 />
-                <p>Описание алго</p>
             </Card>
         </Section>
     )
 }
 
-export default EpilepsySettingsSection
+export default EpilepticsSettingSection

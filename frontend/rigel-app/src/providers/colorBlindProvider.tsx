@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, {createContext, useState} from 'react';
 
 interface ColorBlindContextInterface {
 
@@ -10,12 +10,14 @@ interface ColorBlindContextInterface {
 
 export const ColorBlindContext = createContext<ColorBlindContextInterface>({
     colorBlindMode: 'tritanopia',
-    setColorBlindMode: () => {},
+    setColorBlindMode: () => {
+    },
     colorBlindIntensity: 10,
-    setColorBlindIntensity: () => {},
+    setColorBlindIntensity: () => {
+    },
 });
 
-export const ColorBlindProvider: React.FC = ({ children }: any) => {
+export const ColorBlindProvider: React.FC = ({children}: any) => {
     const [colorBlindMode, setColorBlindMode] = useState<'deuteranopia' | 'protanopia' | 'tritanopia'>(
         'tritanopia',
     );
@@ -23,7 +25,7 @@ export const ColorBlindProvider: React.FC = ({ children }: any) => {
 
     return (
         <ColorBlindContext.Provider
-            value={{ colorBlindMode, setColorBlindMode, colorBlindIntensity, setColorBlindIntensity }}
+            value={{colorBlindMode, setColorBlindMode, colorBlindIntensity, setColorBlindIntensity}}
         >
             {children}
         </ColorBlindContext.Provider>

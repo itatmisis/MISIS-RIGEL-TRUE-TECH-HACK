@@ -1,46 +1,42 @@
 import Header from "./components/header/Header";
 import {Main} from "./components/ui/main/Main";
 import Footer from "./components/footer/Footer";
-import FilmSection from "./sections/filmSection/FilmSection";
+import PlayerSection from "./sections/playerSection/PlayerSection";
 import styled from "styled-components";
-import HelloSection from "./sections/helloSection/HelloSection";
+import WelcomeSection from "./sections/welcomeSection/WelcomeSection";
 import SelectOptionsSection from "./sections/selectOptionsSection/SelectOptionsSection";
-import ContentSelectionSection from "./sections/contentSelectionSection/ContentSelectionSection";
-import SettingsSection from "./sections/settingsSection/SettingsSection";
-import ExtendedSettingsSection from "./sections/extendedSettingsSection/ExtendedSettingsSection";
+import SelectFilmSection from "./sections/selectFilmSection/SelectFilmSection";
+import ColorBlindSettingsSection from "./sections/colorBlindSettingsSection/ColorBlindSettingsSection";
+import ManualColorSettingsSection from "./sections/manualColorSettingsSection/ManualColorSettingsSection";
 import {useState} from "react";
-import EpilepsySettingsSection from "./sections/epilepsySettingsSection/EpilepsySettingsSection";
+import EpilepticsSettingSection from "./sections/epilepticsSettingSection/EpilepticsSettingSection";
+import IFilm from "./interfaces/IFilm";
 
 function App() {
-    const [selectedFilm, setSelectedFilm] = useState('')
-    const [filmUrl, setFilmUrl] = useState('')
+    const [selectedFilm, setSelectedFilm] = useState<IFilm | undefined>(undefined)
 
-  return (
-      <>
-        <Header/>
-        <Main>
-            <HelloSection/>
-            <SelectOptionsSection/>
-            <SettingsSection/>
-            <ExtendedSettingsSection/>
-            <EpilepsySettingsSection/>
-            <ContentSelectionSection selectedFilm={selectedFilm} setSelectedFilm={setSelectedFilm}/>
-            <FilmSection filmUrl={filmUrl}/>
-        </Main>
-        <Footer/>
-          </>
-  )
+    return (
+        <>
+            <Header/>
+            <Main>
+                <WelcomeSection/>
+                <SelectOptionsSection/>
+                <ColorBlindSettingsSection/>
+                <ManualColorSettingsSection/>
+                <EpilepticsSettingSection/>
+                <SelectFilmSection selectedFilm={selectedFilm} setSelectedFilm={setSelectedFilm}/>
+                <PlayerSection selectedFilm={selectedFilm}/>
+            </Main>
+            <Footer/>
+        </>
+    )
 }
 
 const Section = styled.section`
-display: flex;
-flex-direction: column;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
-
-
-
-
 
 
 export default App
