@@ -2,17 +2,24 @@ import Section from "../../components/ui/Section";
 import Card, {CardContentWrapper} from "../../components/ui/Card";
 import styled from "styled-components";
 
-const ContentSelectionSection = () => {
+
+interface IContentSelectionSection {
+    selectedFilm: string
+    setSelectedFilm: (value: string) => void
+}
+
+const ContentSelectionSection = (props: IContentSelectionSection) => {
+    const {selectedFilm, setSelectedFilm} = props
     return (
         <Section>
            <Card>
                <CardContentWrapper>
                <h2>Выберите фильм</h2>
                 <FilmsContainer>
-                    {FilmCard('https://www.kinopoisk.ru/images/film_big/104.jpg', 'Криминальное чтиво', 'Квентин Тарантино')}
-                    {FilmCard('https://www.kinopoisk.ru/images/film_big/104.jpg', 'Криминальное чтиво', 'Квентин Тарантино')}
-                    {FilmCard('https://m.media-amazon.com/images/M/MV5BYWQwMDNkM2MtODU4OS00OTY3LTgwOTItNjE2Yzc0MzRkMDllXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg', 'BoJack Horseman', 'Raphael Bob-Waksberg')}
-                    {FilmCard('https://www.kinopoisk.ru/images/film_big/104.jpg', 'Криминальное чтиво', 'Квентин Тарантино')}
+                    <FilmCard img={'https://i-viaplay-com.akamaized.net/viaplay-prod/771/672/1473257890-66ec43721fe0fd0073af100473a09da74924816c.jpg?width=400&height=600'} title={'Криминальное чтиво'} director={'Квентин Тарантино'} onClick={() => setSelectedFilm('Криминальное чтиво')}/>
+                    <FilmCard img={'https://m.media-amazon.com/images/M/MV5BY2RkY2M2N2QtZGY5ZS00YmVjLThmNTItY2ZkM2JlYmFhZWQyXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_FMjpg_UX1000_.jpg'} title={'Cтрах и ненависть в Лас-Вегасе'} director={'Квентин Тарантино'} onClick={() => setSelectedFilm('Cтрах и ненависть в Лас-Вегасе')}/>
+                    <FilmCard img={'https://www.kinopoisk.ru/images/film_big/104.jpg'} title={'Криминальное чтиво'} director={'Квентин Тарантино'} onClick={() => setSelectedFilm('Криминальное чтиво')}/>
+                    <FilmCard img={'https://www.kinopoisk.ru/images/film_big/104.jpg'} title={'Криминальное чтиво'} director={'Квентин Тарантино'} onClick={() => setSelectedFilm('Криминальное чтиво')}/>
                 </FilmsContainer>
                 </CardContentWrapper>
            </Card>
@@ -36,9 +43,16 @@ const FilmsContainer = styled.div`
     height: 100%;
     `
 
-const FilmCard = (img: string, title: string, director: string) => {
+interface IFilmCard {
+    img: string
+    title: string
+    director: string
+    onClick: () => void
+}
+const FilmCard = (props: IFilmCard) => {
+    const {img, title, director} = props
     return (
-<FilmContainer>
+<FilmContainer onClick={props.onClick}>
     <FilmPoster src={img} alt={title}/>
     <FilmTitle>{title}</FilmTitle>
     <FilmDirector>{director}</FilmDirector>

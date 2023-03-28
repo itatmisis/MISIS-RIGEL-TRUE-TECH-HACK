@@ -8,8 +8,13 @@ import SelectOptionsSection from "./sections/selectOptionsSection/SelectOptionsS
 import ContentSelectionSection from "./sections/contentSelectionSection/ContentSelectionSection";
 import SettingsSection from "./sections/settingsSection/SettingsSection";
 import ExtendedSettingsSection from "./sections/extendedSettingsSection/ExtendedSettingsSection";
+import {useState} from "react";
+import EpilepsySettingsSection from "./sections/epilepsySettingsSection/EpilepsySettingsSection";
 
 function App() {
+    const [selectedFilm, setSelectedFilm] = useState('')
+    const [filmUrl, setFilmUrl] = useState('')
+
   return (
       <>
         <Header/>
@@ -18,8 +23,9 @@ function App() {
             <SelectOptionsSection/>
             <SettingsSection/>
             <ExtendedSettingsSection/>
-            <ContentSelectionSection/>
-            <FilmSection/>
+            <EpilepsySettingsSection/>
+            <ContentSelectionSection selectedFilm={selectedFilm} setSelectedFilm={setSelectedFilm}/>
+            <FilmSection filmUrl={filmUrl}/>
         </Main>
         <Footer/>
           </>

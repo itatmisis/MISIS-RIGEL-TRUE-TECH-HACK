@@ -23,7 +23,13 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${theme.colors.background};
         min-height: 100vh;
         min-width: 100vw;
+        scroll-behavior: smooth;
     }
+      
+      button {
+        border: none;
+        cursor: pointer;
+      }
     
     }`;
         
