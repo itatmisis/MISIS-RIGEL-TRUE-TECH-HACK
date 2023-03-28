@@ -1,14 +1,12 @@
 package main
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/izveigor/TRUE-TECH-HACK/pkg/broker"
@@ -16,7 +14,6 @@ import (
 	"github.com/izveigor/TRUE-TECH-HACK/pkg/handlers"
 	"github.com/izveigor/TRUE-TECH-HACK/pkg/pb"
 	"github.com/izveigor/TRUE-TECH-HACK/pkg/postgres"
-	"google.golang.org/protobuf/proto"
 )
 
 var (
@@ -35,7 +32,7 @@ func run_http_server() {
 }
 
 func run_hls_server() {
-	http.Handle("/", HLSMiddleware(http.FileServer(http.Dir(config.Config.VideoDirectory))))
+	http.Handle("/", HLSMiddleware(http.FileServer(http.Dir("./"+config.Config.VideoDirectory))))
 	fmt.Printf("Starting server on %v\n", config.Config.HlsPort)
 	log.Printf("Serving %s on HTTP port: %v\n", config.Config.VideoDirectory, config.Config.HlsPort)
 
@@ -58,22 +55,23 @@ func GetColorBlindnessType(colorBlindness string) pb.ColorBlindnessType {
 
 func HLSMiddleware(h http.Handler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Println("!!!")
-		var token string = "1" // strings.Split(r.Header.Get("Authorization"), ":")[1]
+		/*log.Println("!!!")
+		// var token string = "1" // strings.Split(r.Header.Get("Authorization"), ":")[1]
 		urls := strings.Split(r.URL.Path, "/")
 		file := strings.Split(urls[len(urls)-1], ".")
 		filename, extension := file[0], file[1]
 
 		log.Println(filename, extension)
 		if extension == "ts" {
-			filename_without_numbers, string_number := filename[:len(filename)-4], filename[len(filename)-4:]
+			filename_without_numbers, string_number := filename[:len(filename)-5], filename[len(filename)-4:]
+			fmt.Println(":FFF:", filename_without_numbers, string_number)
 			number, err := strconv.Atoi(string_number)
 			if err != nil {
 				w.WriteHeader(http.StatusBadRequest)
 				return
 			}
 
-			settings := postgres.GetSettings(token)
+			settings := postgres.Settings{UUID: "1", ColorBlindnessType: "protanopia", Degree: 0.1, HaveEpilepsy: false} // postgres.GetSettings(token)
 			var taskType pb.TaskType
 			var colorBlindnessType pb.ColorBlindnessType
 
@@ -91,7 +89,7 @@ func HLSMiddleware(h http.Handler) http.HandlerFunc {
 
 			if settings.ColorBlindnessType != "" {
 				buffer, err := proto.Marshal(&pb.SegmentRequest{
-					Filename:           filename_without_numbers,
+					Filename:           filename + "." + extension,
 					Number:             int64(number),
 					TaskType:           taskType,
 					ColorBlindnessType: &colorBlindnessType,
@@ -100,10 +98,10 @@ func HLSMiddleware(h http.Handler) http.HandlerFunc {
 					w.WriteHeader(http.StatusBadRequest)
 					return
 				}
-				broker.Push(context.TODO(), "SegmentRequest", buffer)
+				go broker.Push(context.TODO(), "SegmentRequest", buffer)
 			} else {
 				buffer, err := proto.Marshal(&pb.SegmentRequest{
-					Filename: filename,
+					Filename: filename + "." + extension,
 					Number:   int64(number),
 					TaskType: taskType,
 				})
@@ -111,7 +109,7 @@ func HLSMiddleware(h http.Handler) http.HandlerFunc {
 					w.WriteHeader(http.StatusBadRequest)
 					return
 				}
-				broker.Push(context.TODO(), "SegmentRequest", buffer)
+				go broker.Push(context.TODO(), "SegmentRequest", buffer)
 			}
 		} else if extension == "m3u8" {
 			buffer, err := proto.Marshal(&pb.VideoMetadataRequest{
@@ -121,8 +119,9 @@ func HLSMiddleware(h http.Handler) http.HandlerFunc {
 				w.WriteHeader(http.StatusBadRequest)
 				return
 			}
-			broker.Push(context.TODO(), "VideoMetadataRequest", buffer)
-		}
+			go broker.Push(context.TODO(), "VideoMetadataRequest", buffer)
+		}*/
+
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		h.ServeHTTP(w, r)
 	}

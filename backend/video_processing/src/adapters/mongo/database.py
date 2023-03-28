@@ -13,8 +13,7 @@ class Database(metaclass=Singleton):
         self.collection = self.database[self.collection_name]
 
     def get_byte_file(self, original_filename, filename):
-        print({"original_filename": "_".join(original_filename.split("_")[:-1]), "filename": filename})
         # {'original_filename': 'Lonely_tree_at_Sunset_slow_motion_CCBY_NatureClip', 'filename': 'Lonely_tree_at_Sunset_slow_motion_CCBY_NatureClip.m3u8'}
         return self.collection.find_one(
-            {"original_filename": "_".join(original_filename.split("_")[:-1]), "filename": filename}
+            {"original_filename": original_filename, "filename": filename}
         )

@@ -19,12 +19,11 @@ import (
 var reader *kafka.Reader
 
 func InitReader(kafkaBrokerUrls []string, clientId string, topic string) (r *kafka.Reader, err error) {
-	fmt.Println(topic)
 	config := kafka.ReaderConfig{
 		Brokers:         kafkaBrokerUrls,
 		Topic:           topic,
 		MinBytes:        10e3,
-		MaxBytes:        10e6,
+		MaxBytes:        57671680,
 		MaxWait:         1 * time.Second,
 		ReadLagInterval: -1,
 	}
@@ -36,12 +35,10 @@ func InitReader(kafkaBrokerUrls []string, clientId string, topic string) (r *kaf
 
 func SaveSegment(filename string, content []byte) {
 	var pathToFile string = filepath.Join(config.Config.VideoDirectory, filename)
-	fmt.Println(pathToFile)
 	if _, err := os.Stat(pathToFile); errors.Is(err, os.ErrNotExist) {
 		err := ioutil.WriteFile(pathToFile, content, 0644)
-		fmt.Println("!!!")
 		if err != nil {
-			panic(err)
+			fmt.Println(err)
 		}
 	}
 }
@@ -54,8 +51,6 @@ func Listen() {
 			continue
 		}
 
-		key := string(m.Key)
-		fmt.Println(key)
 		value := m.Value
 
 		if err != nil {
@@ -63,26 +58,11 @@ func Listen() {
 			continue
 		}
 
-		fmt.Printf("message at topic/partition/offset %v/%v/%v: %s\n", m.Topic, m.Partition, m.Offset, string(value))
-
-		fmt.Println("QWEQE")
-		switch key {
-		case "SegmentResponse":
-			var result pb.SegmentResponse
-			err := proto.Unmarshal(value, &result)
-			if err != nil {
-				log.Fatal("error: cannot deserialize data")
-			}
-			SaveSegment(result.GetFilename(), result.GetSegment())
-		case "VideoMetadataResponse":
-			var result pb.VideoMetadataResponse
-			err := proto.Unmarshal(value, &result)
-			if err != nil {
-				log.Fatal("error: cannot deserialize data")
-			}
-			SaveSegment(result.GetFilename(), result.GetVideoMetadata())
-		default:
-			continue
+		var result pb.Response
+		err = proto.Unmarshal(value, &result)
+		if err != nil {
+			log.Fatal("error: cannot deserialize data")
 		}
+		SaveSegment(result.GetFilename(), result.GetVideo())
 	}
 }

@@ -22,16 +22,11 @@ message SegmentRequest {
     optional ColorBlindnessType colorBlindnessType = 4;
 }
 
-message SegmentResponse {
+message Response {
     string filename = 2;
-    bytes segment = 1;
+    bytes video = 1;
 }
 
 message VideoMetadataRequest {
     string filename = 1;
-}
-
-message VideoMetadataResponse {
-    string filename = 2;
-    bytes videoMetadata = 1;
 }

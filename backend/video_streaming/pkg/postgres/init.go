@@ -32,6 +32,6 @@ func Init() {
 }
 
 func Migrate() {
-	Instance.AutoMigrate(&Settings{})
+	Instance.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&Settings{})
 	log.Println("Database Migration Completed!")
 }
