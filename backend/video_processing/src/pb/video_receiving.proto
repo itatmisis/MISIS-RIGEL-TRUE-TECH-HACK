@@ -9,9 +9,10 @@ enum ColorBlindnessType {
 }
 
 enum TaskType {
-    EPILEPSY = 0;
-    COLOR_BLINDNESS = 1;
-    EPILEPSY_AND_COLOR_BLINDNESS = 2;
+    NOTHING = 0;
+    EPILEPSY = 1;
+    COLOR_BLINDNESS = 2;
+    EPILEPSY_AND_COLOR_BLINDNESS = 3;
 }
 
 message SegmentRequest {
@@ -19,7 +20,6 @@ message SegmentRequest {
     int64 number = 2;
     TaskType taskType = 3;
     optional ColorBlindnessType colorBlindnessType = 4;
-    optional float degree = 5;
 }
 
 message SegmentResponse {

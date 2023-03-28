@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from pb.video_processing_pb2 import ColorBlindnessType
+from pb.video_receiving_pb2 import ColorBlindnessType
 
 
 def lms_to_rgb():

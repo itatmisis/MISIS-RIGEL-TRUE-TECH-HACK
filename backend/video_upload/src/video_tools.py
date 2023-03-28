@@ -3,7 +3,7 @@ import os
 import sys
 
 import ffmpeg_streaming
-from ffmpeg_streaming import Formats
+from ffmpeg_streaming import Formats, Bitrate, Representation, Size
 from constants import VIDEO_DIRECTORY
 
 
@@ -16,27 +16,38 @@ def monitor(ffmpeg, duration, time_, time_left, process):
     sys.stdout.flush()
 
 
-def split_video_into_segments(self, filename):
+def split_video_into_segments(filename):
     video = ffmpeg_streaming.input(os.path.join(VIDEO_DIRECTORY, filename))
 
+    _1080p = Representation(Size(1920, 1080), Bitrate(4096 * 1024, 320 * 1024))
+
     hls = video.hls(Formats.h264())
-    hls.auto_generate_representations()
+    hls.representations(_1080p)
+    hls_output_directory = os.path.join(VIDEO_DIRECTORY, os.path.splitext(filename)[0])
+    if not os.path.exists(hls_output_directory):
+        os.mkdir(hls_output_directory)
+
     hls.output(
-        os.path.join(VIDEO_DIRECTORY, os.path.splitext(filename)[0]), monitor=monitor
+        os.path.join(hls_output_directory, filename), monitor=monitor
     )
 
 
 def read_m3u8(original_filename, directory):
-    m3u8_file = [file for file in os.listdir() if os.path.splitext()[1] == ".m3u8"][0]
-    with open(m3u8_file, "rb") as reading_file:
-        return {"original_filename": original_filename, "filename": m3u8_file, "content": reading_file.read()}
+    m3u8_files = [file for file in os.listdir(directory) if os.path.splitext(file)[1] == ".m3u8"]
+    videos = []
+    for m3u8_file in m3u8_files:
+        file = os.path.join(directory, m3u8_file)
+        with open(file, "rb") as reading_file:
+            videos.append({"original_filename": original_filename, "filename": file.split("/")[-1], "content": reading_file.read()})
+
+    return videos
 
 
 def read_segments(original_filename, directory):
     segments = []
-    for file in os.listdir():
-        _, extension = os.path.splitext(file)
+    for file in os.listdir(directory):
+        extension = os.path.splitext(file)[1]
         if extension == ".ts":
-            with open(file, "rb") as reading_file:
-                segments.append({"original_filename": original_filename, "filename": file, "content": reading_file.read()})
+            with open(os.path.join(directory, file), "rb") as reading_file:
+                segments.append({"original_filename": original_filename, "filename": file.split("/")[-1], "content": reading_file.read()})
     return segments
