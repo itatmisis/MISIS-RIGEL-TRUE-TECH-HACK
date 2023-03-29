@@ -9,6 +9,8 @@ const EpilepticsSettingSection = () => {
     const [isEpilepsy, setIsEpilepsy] = useState(false)
     const [videoTime, setVideoTime] = useState(0)
     const {getFilterEffect} = useFilter();
+    const [isPlay, setIsPlay] = useState<boolean>(false);
+    const componentRef = useRef<HTMLDivElement>(null);
     const link1 = "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8"
     const link2 = `https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8`
     const playerRef = useRef<ReactPlayer | null>(null)
@@ -21,8 +23,36 @@ const EpilepticsSettingSection = () => {
     //SET FILTER
     const filterEffect = getFilterEffect()
 
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setIsPlay(true);
+                    }
+                });
+            },
+            {
+                root: null,
+                threshold: 0.5, // change this value to adjust the trigger threshold
+            }
+        );
+
+        if (componentRef.current) {
+            observer.observe(componentRef.current);
+        }
+
+        return () => {
+            if (componentRef.current) {
+                observer.unobserve(componentRef.current);
+            }
+        };
+    }, []);
+
+
     return (
-        <Section className={"epileptics-settings-section"}>
+        <Section className={"epileptics-settings-section"} ref={componentRef}>
             <Card>
                 <CardInfo>
                     <div>
@@ -33,10 +63,17 @@ const EpilepticsSettingSection = () => {
                 </CardInfo>
                 <ReactPlayer
                     ref={playerRef}
-                    //set video location
+                    canEnablePIP={false}
                     url={isEpilepsy ? link2 : link1}
-                    playing={false}
-                    controls={true}
+                    playing={isPlay}
+                    controls={false}
+                    muted={true}
+                    loop={true}
+                    autoPlay={true}
+                    playsinline={true}
+                    pip={false}
+                    stopOnEnd={false}
+                    volume={0}
                     //set video time
                     onProgress={(e) => {
                         console.log(e.playedSeconds)
@@ -44,7 +81,6 @@ const EpilepticsSettingSection = () => {
                     }}
                     width="100%"
                     height="100%"
-                    volume={0.5}
                     style={{filter: filterEffect}}
                 />
             </Card>

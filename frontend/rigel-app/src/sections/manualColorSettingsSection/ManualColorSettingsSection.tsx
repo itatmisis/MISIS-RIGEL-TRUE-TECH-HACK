@@ -32,21 +32,26 @@ const ManualColorSettingsSection = () => {
                         </div>
                         <Switch checked={isUsingFilter} onChange={() => setIsUsingFilter(!isUsingFilter)}/>
                     </CardInfo>
-                    <TestImage src={testImage} alt={"Тест на дальтонизм"} style={{filter: getFilterEffect()}}/>
-                    <ControlWrapper style={!isUsingFilter ? {display: 'none'} : {}}>
-                        <p>Яркость</p>
-                        <Slider defaultValue={brightness} step={0.01} min={0} max={2} value={brightness}
-                                onChange={(value) => setBrightness(value)}/>
-                        <p>Контрастность</p>
-                        <Slider defaultValue={contrast} step={0.01} min={0} max={2} value={contrast}
-                                onChange={(value) => setContrast(value)}/>
-                        <p>Насыщенность</p>
-                        <Slider defaultValue={saturation} step={0.01} min={0} max={2} value={saturation}
-                                onChange={(value) => setSaturation(value)}/>
-                        <p>Оттенки</p>
-                        <Slider defaultValue={hue} step={1} min={0} max={360} onChange={(value) => setHue(value)} value={hue}/>
-                        <Button onClick={handleResetColors} type={"primary"}>Сбросить</Button>
-                    </ControlWrapper>
+                    <div style={!isUsingFilter ? {display: 'none'} : {}}>
+                        <TestImage src={testImage} alt={"Тест на дальтонизм"} style={{filter: getFilterEffect()}}/>
+                        <ControlWrapper>
+                            <p>Яркость</p>
+                            <Slider defaultValue={brightness} step={0.01} min={0} max={2} value={brightness}
+                                    onChange={(value) => setBrightness(value)}/>
+                            <p>Контрастность</p>
+                            <Slider defaultValue={contrast} step={0.01} min={0} max={2} value={contrast}
+                                    onChange={(value) => setContrast(value)}/>
+                            <p>Насыщенность</p>
+                            <Slider defaultValue={saturation} step={0.01} min={0} max={2} value={saturation}
+                                    onChange={(value) => setSaturation(value)}/>
+                            <p>Оттенки</p>
+                            <Slider defaultValue={hue} step={1} min={0} max={360} onChange={(value) => setHue(value)}
+                                    value={hue}/>
+                        </ControlWrapper>
+                        <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginTop: '1em'}}>
+                            <Button onClick={handleResetColors} type={"primary"}>Сбросить</Button>
+                        </div>
+                    </div>
                 </CardContentWrapper>
             </Card>
         </Section>

@@ -28,9 +28,10 @@ const Header = () => {
                 <Logo src={rigelIcons} alt="Rigel"/>
             </Link>
             <Menu>
-                {menuItems.map(item => (
-                    <MenuItem key={item.id} isActive={item.path === window.location.pathname}>{item.title}</MenuItem>)
-                )}
+                <p>Проблема</p>
+                <p>Поиск</p>
+                <p>Решение</p>
+                <p>Комфорт</p>
             </Menu>
         </HeaderContainer>
     )
@@ -50,28 +51,13 @@ const HeaderContainer = styled.header`
 `
 
 const Logo = styled.img`
-  height: 1.3em;
+  height: 2.4em;
 `
 
 const Menu = styled.nav`
   display: flex;
-  gap: 8px;
+  gap: 24px;
   align-items: center;
-`
-const MenuItem = styled.a<{ isActive?: boolean }>`
-  padding: ${(props) => props.theme.sizes.padding};
-  height: 100%;
-  font-size: ${(props) => props.theme.sizes.font};
-  color: ${(props) => props.theme.colors[props.isActive ? 'accent' : 'text']};
-  text-decoration: none;
-  cursor: pointer;
-  transition: ${(props) => props.theme.transitions};
-  opacity: ${(props) => props.isActive ? 1 : 0.5};
-
-  &:hover {
-    color: ${(props) => props.theme.colors.accent};
-    opacity: 1;
-  }
 `
 
 const ProfileContainer = styled.div`
@@ -86,10 +72,6 @@ const ProfileImage = styled.img`
   border-radius: 50%;
   //не сжимать содержимое
   object-fit: cover;
-`
-const ProfileName = styled.span`
-  font-size: ${(props) => props.theme.sizes.font};
-  color: ${(props) => props.theme.colors.text};
 `
 
 

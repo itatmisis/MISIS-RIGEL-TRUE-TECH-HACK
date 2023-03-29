@@ -3,11 +3,8 @@ import Section from "../../components/ui/Section";
 import {useFilter} from "../../providers/filterProvider";
 import IFilm from "../../interfaces/IFilm";
 import styled from "styled-components";
-import React, {useEffect, useRef} from "react";
-import {Slider} from "antd";
-import screenfull from "screenfull";
-import {CaretRightOutlined, SoundOutlined} from "@ant-design/icons";
-import ReactDOM from "react-dom/client";
+import React, {useRef} from "react";
+import 'material-icons/iconfont/material-icons.css';
 
 
 interface IFilmSection {
@@ -52,22 +49,12 @@ const PlayerSection = (props: IFilmSection) => {
         }
         setIsFullScreen((prev) => !prev)
     }
-    // }
-    // useEffect(() => {
-    //     //FIND video tag
-    //     const player = playerRef.current as any
-    //     const video: HTMLVideoElement = player.getElementsByTagName('video')[0]
-    //     console.log(video)
-    //     video.onfullscreenchange = () => {
-    //         setIsFullScreen((prev) => !prev)
-    //         onFullScreen();
-    //     }
-    // }, [playerRef])
 
 
     return (
         <Section className="player-section">
-            <div style={{width: '100%', height: '100%', filter: filterEffect}} ref={playerRef as any} onClick={onFullScreen}>
+            <div style={{width: '100%', height: '100%', filter: filterEffect}} ref={playerRef as any}
+                 onClick={onFullScreen}>
                 <ReactPlayer
                     url={link}
                     controls={false}
@@ -75,7 +62,16 @@ const PlayerSection = (props: IFilmSection) => {
                     volume={0.5}
                     height="100%"
                     playing={true}
+                    disablePictureInPicture
                 />
+                {/*    <Row>*/}
+                {/*        <Button type="primary" shape="circle" icon={<CaretRightOutlined />} size={'large'} />*/}
+                {/*        //video scroll*/}
+                {/*        <Slider defaultValue={30} style={{width: '50%'}} />*/}
+                {/*        //volume scroll*/}
+                {/*        <Slider defaultValue={30} />*/}
+                {/*        <Button>Fullscreen</Button>*/}
+                {/*    </Row>*/}
             </div>
             {selectedFilm &&
                 <FilmInfo>
@@ -88,37 +84,34 @@ const PlayerSection = (props: IFilmSection) => {
 }
 
 const PlayerControls = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
+  width: 100%;
+  height: 100%;
+  display: flex;
   gap: 1rem;
-  `
-
+`
 
 
 const FilmTitle = styled.h3`
-    text-align: start;
+  text-align: start;
   font-size: 1.5rem;
-    font-weight: 700;
-    `
+  font-weight: 700;
+`
 
 const FilmDirector = styled.p`
-    text-align: start;
-    font-size: 1rem;
-    font-weight: 400;
-    `
+  text-align: start;
+  font-size: 1rem;
+  font-weight: 400;
+`
 
 
 const FilmInfo = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
-    `
-
- 
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+`
 
 
 export default PlayerSection

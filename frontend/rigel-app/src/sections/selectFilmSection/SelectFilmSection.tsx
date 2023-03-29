@@ -4,8 +4,12 @@ import styled from "styled-components";
 import IFilm from "../../interfaces/IFilm";
 
 
-
 const films = [
+    {
+        img: 'https://m.media-amazon.com/images/M/MV5BYWQwMDNkM2MtODU4OS00OTY3LTgwOTItNjE2Yzc0MzRkMDllXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg',
+        title: 'BoJack Horseman',
+        director: 'Рафаель Боб-Ваксберг',
+    },
     {
         img: 'https://i-viaplay-com.akamaized.net/viaplay-prod/771/672/1473257890-66ec43721fe0fd0073af100473a09da74924816c.jpg?width=400&height=600',
         title: 'Криминальное чтиво',
@@ -35,6 +39,7 @@ interface ISelectFilmSection {
     selectedFilm?: IFilm,
     setSelectedFilm: (film: IFilm) => void
 }
+
 const SelectFilmSection = (props: ISelectFilmSection) => {
     const {selectedFilm, setSelectedFilm} = props
     const handleFilmClick = (film: IFilm) => {
@@ -55,9 +60,9 @@ const SelectFilmSection = (props: ISelectFilmSection) => {
                     <h2>Выберите фильм</h2>
                     <FilmsContainer>
                         {films.map((film) =>
-                            <div style={selectedFilm?.title === film.title ? {border: '2px solid #FFC107'} : {}}>
-                            <FilmCard {...film} onClick={() => handleFilmClick(film)}/>
-                            </div>
+                            <FilmContainerWrapper isSelect={selectedFilm?.title === film.title}>
+                                <FilmCard {...film} onClick={() => handleFilmClick(film)}/>
+                            </FilmContainerWrapper>
                         )}
                     </FilmsContainer>
                 </CardContentWrapper>
@@ -68,14 +73,20 @@ const SelectFilmSection = (props: ISelectFilmSection) => {
 export default SelectFilmSection
 
 
+const FilmContainerWrapper = styled.div<{ isSelect: boolean }>`
+  box-sizing: border-box;
+  border: 3px solid ${({isSelect}) => isSelect ? theme => theme.theme.colors.accent : 'none'};
+  border-radius: ${(theme) => theme.theme.sizes.borderRadius};
+  padding: 3px;
+`
+
 const FilmsContainer = styled.div`
-  //with horizontal scroll
   display: flex;
   flex-direction: row;
   overflow-x: auto;
   overflow-y: hidden;
   gap: 6px;
-  padding: 6px;
+  //padding: 6px;
   width: 100%;
   height: 100%;
 `
@@ -113,7 +124,7 @@ const FilmContainer = styled.div`
 const FilmPoster = styled.img`
   width: 249px;
   height: 373.5px;
-  border-radius: 16px;
+  border-radius: ${({theme}) => theme.sizes.borderRadius};
   object-fit: cover;
 `
 const FilmTitle = styled.h3`
