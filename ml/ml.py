@@ -48,12 +48,21 @@ def getDangerMapping(video: np.ndarray, I: np.ndarray) -> np.array:
     return np.array((video, I), dtype=object)
 
 
-def darken(image: np.ndarray, darken_strength=6) -> np.ndarray:
-    minval = np.percentile(image, darken_strength)
-    maxval = np.percentile(image, 100 - darken_strength)
-    image = np.clip(image, minval, maxval)
-    image = ((image - minval) / (maxval - minval)) * 255  # not sure about 255
-    return image
+def fade(image, strength, flow_up=False) -> np.array():
+    width, height, _ = image.shape
+    p1 = strength
+    p2 = 100 - strength
+    fade_range = list(range(int(height * p1), int(height * p2)))
+    fade_range = fade_range[::-1] if flow_up else fade_range
+    pixels = image.copy()
+    for y in fade_range:
+        if flow_up:
+            alpha = int((y - height * p1) / height / (p2 - p1) * 255)
+        else:
+            alpha = 255 - int((y - height * p1) / height / (p2 - p1) * 255)
+        for x in range(width):
+            pixels[x, y] = pixels[x, y][:3] + (alpha,)
+    return pixels
 
 
 def gaussian_blurring(image: np.ndarray, blur_strength=25) -> np.ndarray:
@@ -67,5 +76,5 @@ def epilepsy_task(video: np.ndarray, threshold: float = 0.6) -> np.ndarray:
         I = getI(image, threshold)
         danger_mapping = getDangerMapping(image, I)
         strength = np.argwhere(danger_mapping[0] == image)[0]
-        new.append(darken(gaussian_blurring(image)))
+        new.append(fade(image, strength))
     return new
