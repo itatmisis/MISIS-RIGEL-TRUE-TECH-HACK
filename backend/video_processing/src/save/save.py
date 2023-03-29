@@ -47,7 +47,6 @@ def get_video(filename, images):
     height, width, _ = images[0].shape
     size = (width, height)
     full_path = os.path.join(SEGMENTS_DIRECTORY, "_".join(filename.split(".")[0].split("_")[:-2]), filename)
-    print(full_path)
 
     mp4_path = full_path.split('.')[0] + ".mp4"
     out = cv2.VideoWriter(mp4_path, cv2.VideoWriter_fourcc(*"MP4V"), 29, size)

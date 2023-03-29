@@ -3,7 +3,7 @@ from processing.color_blindness import (alpha_blending, gaussian_blurring,
                                         to_new_rgb)
 
 
-def color_blindness_task(color_blindness_type: ColorBlindnessType, image):
+def color_blindness_task(color_blindness_type: ColorBlindnessType, degree: float, image):
     return alpha_blending(
-        gaussian_blurring(to_new_rgb(image, color_blindness_type)), image
+        gaussian_blurring(to_new_rgb(image, color_blindness_type, degree)), image
     )
