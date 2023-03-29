@@ -17,7 +17,6 @@ class Pipeline:
         self.pipeline = Producer()
 
     def start_processing(self, request: SegmentRequest):
-        print("Начал работать")
         images = get_images_from_segment(Database(), request)
         match request.taskType:
             case TaskType.EPILEPSY:

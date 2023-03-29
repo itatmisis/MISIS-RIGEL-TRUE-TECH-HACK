@@ -32,7 +32,6 @@ class Consumer(metaclass=Singleton):
                     video_metadata_request.ParseFromString(message.value)
                     original_filename = os.path.splitext(video_metadata_request.filename)[0]
                     file_data = Database().get_byte_file("_".join(original_filename.split("_")[:-1]), video_metadata_request.filename)
-                    print("file_data", file_data)
                     Producer().send(
                         file_data["filename"], file_data["content"]
                     )

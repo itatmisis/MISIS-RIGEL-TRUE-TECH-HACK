@@ -65,7 +65,6 @@ func HLSMiddleware(h http.Handler) http.HandlerFunc {
 
 		if extension == "ts" {
 			filename_without_numbers, string_number := filename[:len(filename)-5], filename[len(filename)-4:]
-			fmt.Println(":FFF:", filename_without_numbers, string_number)
 			number, err := strconv.Atoi(string_number)
 			if err != nil {
 				w.WriteHeader(http.StatusBadRequest)

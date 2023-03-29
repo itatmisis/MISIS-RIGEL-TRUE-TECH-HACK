@@ -15,11 +15,6 @@ class Database:
         m3u8_in_bytes = read_m3u8(original_filename, directory)
         self.collection.insert_many(m3u8_in_bytes)
 
-        print({"original_filename": m3u8_in_bytes[0]["original_filename"], "filename": m3u8_in_bytes[0]["filename"]})
-        print(self.collection.find_one(
-            {"original_filename": m3u8_in_bytes[0]["original_filename"], "filename": m3u8_in_bytes[0]["filename"]}
-        ))
-
     def update_segments(self, original_filename, directory):
         segments_in_bytes = read_segments(original_filename, directory)
         self.collection.insert_many(segments_in_bytes)

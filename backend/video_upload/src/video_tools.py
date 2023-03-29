@@ -21,7 +21,6 @@ def split_video_into_segments(filename):
 
     _480p = Representation(Size(854, 480), Bitrate(750 * 1024, 192 * 1024))
 
-    # print(vars(Formats))
     hls = video.hls(Formats.h264())
     hls.representations(_480p)
     hls_output_directory = os.path.join(VIDEO_DIRECTORY, os.path.splitext(filename)[0])
