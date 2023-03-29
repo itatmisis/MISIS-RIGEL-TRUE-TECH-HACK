@@ -1,12 +1,14 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/izveigor/TRUE-TECH-HACK/pkg/broker"
@@ -14,6 +16,7 @@ import (
 	"github.com/izveigor/TRUE-TECH-HACK/pkg/handlers"
 	"github.com/izveigor/TRUE-TECH-HACK/pkg/pb"
 	"github.com/izveigor/TRUE-TECH-HACK/pkg/postgres"
+	"google.golang.org/protobuf/proto"
 )
 
 var (
@@ -55,13 +58,11 @@ func GetColorBlindnessType(colorBlindness string) pb.ColorBlindnessType {
 
 func HLSMiddleware(h http.Handler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		/*log.Println("!!!")
-		// var token string = "1" // strings.Split(r.Header.Get("Authorization"), ":")[1]
+		var token string = "1" // strings.Split(r.Header.Get("Authorization"), ":")[1]
 		urls := strings.Split(r.URL.Path, "/")
 		file := strings.Split(urls[len(urls)-1], ".")
 		filename, extension := file[0], file[1]
 
-		log.Println(filename, extension)
 		if extension == "ts" {
 			filename_without_numbers, string_number := filename[:len(filename)-5], filename[len(filename)-4:]
 			fmt.Println(":FFF:", filename_without_numbers, string_number)
@@ -71,7 +72,7 @@ func HLSMiddleware(h http.Handler) http.HandlerFunc {
 				return
 			}
 
-			settings := postgres.Settings{UUID: "1", ColorBlindnessType: "protanopia", Degree: 0.1, HaveEpilepsy: false} // postgres.GetSettings(token)
+			settings := postgres.GetSettings(token)
 			var taskType pb.TaskType
 			var colorBlindnessType pb.ColorBlindnessType
 
@@ -120,7 +121,7 @@ func HLSMiddleware(h http.Handler) http.HandlerFunc {
 				return
 			}
 			go broker.Push(context.TODO(), "VideoMetadataRequest", buffer)
-		}*/
+		}
 
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		h.ServeHTTP(w, r)

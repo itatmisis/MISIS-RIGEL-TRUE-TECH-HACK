@@ -14,8 +14,8 @@ def lms_to_rgb():
     ).T
 
 
-def to_new_rgb(image, color_blindness_type: ColorBlindnessType):
-    multiply = np.dot(load_lms(image), rgb_to_cvd_lms(color_blindness_type))
+def to_new_rgb(image, degree, color_blindness_type: ColorBlindnessType):
+    multiply = np.dot(load_lms(image), rgb_to_cvd_lms(color_blindness_type, degree))
     return np.uint8(np.dot(multiply, lms_to_rgb()) * 255)
 
 
@@ -37,14 +37,14 @@ def to_tritanopic_lms(degree: float = 1.0):
     ).T
 
 
-def rgb_to_cvd_lms(color_blindness_type: ColorBlindnessType):
+def rgb_to_cvd_lms(color_blindness_type: ColorBlindnessType, degree):
     match color_blindness_type:
         case ColorBlindnessType.PROTANOPIA:
-            return to_protanopic_lms(1)
+            return to_protanopic_lms(degree)
         case ColorBlindnessType.DEUTERANOPIA:
-            return to_deuteranopic_lms(1)
+            return to_deuteranopic_lms(degree)
         case ColorBlindnessType.TRITANOPIA:
-            return to_tritanopic_lms(1)
+            return to_tritanopic_lms(degree)
 
 
 def rgb_to_lms() -> np.array:

@@ -48,17 +48,12 @@ def getDangerMapping(video: np.ndarray, I: np.ndarray) -> np.array:
     return np.array((video, I), dtype=object)
 
 
-def fade(image, strength=10) -> np.ndarray:
-    width, height, _ = image.shape
-    p1 = strength
-    p2 = 100 - strength
-    fade_range = list(range(int(height * p1), int(height * p2) - 10))
-    pixels = image.copy()
-    for y in fade_range:
-        alpha = 255 - int((y - height * p1) / height / (p2 - p1) * 255)
-        for x in range(width - 10):
-            pixels[x, y] = pixels[x, y][:3] + (alpha,)
-    return pixels
+def darken(image: np.ndarray, darken_strength=6) -> np.ndarray:
+    minval = np.percentile(image, darken_strength)
+    maxval = np.percentile(image, 100 - darken_strength)
+    image = np.clip(image, minval, maxval)
+    image = ((image - minval) / (maxval - minval)) * 255  # not sure about 255
+    return image
 
 
 def gaussian_blurring(image: np.ndarray, blur_strength=25) -> np.ndarray:
@@ -66,26 +61,8 @@ def gaussian_blurring(image: np.ndarray, blur_strength=25) -> np.ndarray:
     return np.hstack((image, dst))
 
 
-def epilepsy_task(images, threshold: float = 0.6) -> np.ndarray:
-    new = []
-    for image in images:
-        I = getI(image, threshold)
-        danger_mapping = getDangerMapping(image, I)
-        strength = np.argwhere(danger_mapping[0] == image)[0][0]
-        new.append(fade(image, strength))
-    return np.array(new)
-
-
-cap = cv2.VideoCapture(r'C:\Users\hehen\PycharmProjects\reshuege\v.mp4')
-vid = []
-while cap.isOpened():
-    ret, frame = cap.read()
-    if ret:
-        vid.append(frame)
-    else:
-        break
-
-task = epilepsy_task(vid)
-for i in task:
-    cv2.imshow('image', i)
-    cv2.waitKey(0)
+def epilepsy_task(image: np.ndarray, threshold: float = 0.6) -> np.ndarray:
+    I = getI(image, threshold)
+    danger_mapping = getDangerMapping(image, I)
+    strength = np.argwhere(danger_mapping[0] == image)[0]
+    return darken(gaussian_blurring(image))
