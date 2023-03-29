@@ -48,19 +48,15 @@ def getDangerMapping(video: np.ndarray, I: np.ndarray) -> np.array:
     return np.array((video, I), dtype=object)
 
 
-def fade(image, strength, flow_up=False) -> np.array():
+def fade(image, strength=10) -> np.ndarray:
     width, height, _ = image.shape
     p1 = strength
     p2 = 100 - strength
-    fade_range = list(range(int(height * p1), int(height * p2)))
-    fade_range = fade_range[::-1] if flow_up else fade_range
+    fade_range = list(range(int(height * p1), int(height * p2) - 10))
     pixels = image.copy()
     for y in fade_range:
-        if flow_up:
-            alpha = int((y - height * p1) / height / (p2 - p1) * 255)
-        else:
-            alpha = 255 - int((y - height * p1) / height / (p2 - p1) * 255)
-        for x in range(width):
+        alpha = 255 - int((y - height * p1) / height / (p2 - p1) * 255)
+        for x in range(width - 10):
             pixels[x, y] = pixels[x, y][:3] + (alpha,)
     return pixels
 
@@ -70,11 +66,26 @@ def gaussian_blurring(image: np.ndarray, blur_strength=25) -> np.ndarray:
     return np.hstack((image, dst))
 
 
-def epilepsy_task(video: np.ndarray, threshold: float = 0.6) -> np.ndarray:
+def epilepsy_task(images, threshold: float = 0.6) -> np.ndarray:
     new = []
-    for image in video:
+    for image in images:
         I = getI(image, threshold)
         danger_mapping = getDangerMapping(image, I)
-        strength = np.argwhere(danger_mapping[0] == image)[0]
+        strength = np.argwhere(danger_mapping[0] == image)[0][0]
         new.append(fade(image, strength))
     return np.array(new)
+
+
+cap = cv2.VideoCapture(r'C:\Users\hehen\PycharmProjects\reshuege\v.mp4')
+vid = []
+while cap.isOpened():
+    ret, frame = cap.read()
+    if ret:
+        vid.append(frame)
+    else:
+        break
+
+task = epilepsy_task(vid)
+for i in task:
+    cv2.imshow('image', i)
+    cv2.waitKey(0)
