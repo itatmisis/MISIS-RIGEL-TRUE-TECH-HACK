@@ -2,7 +2,6 @@ import Header from "./components/header/Header";
 import {Main} from "./components/ui/main/Main";
 import Footer from "./components/footer/Footer";
 import PlayerSection from "./sections/playerSection/PlayerSection";
-import styled from "styled-components";
 import WelcomeSection from "./sections/welcomeSection/WelcomeSection";
 import SelectOptionsSection from "./sections/selectOptionsSection/SelectOptionsSection";
 import SelectFilmSection from "./sections/selectFilmSection/SelectFilmSection";
@@ -31,12 +30,6 @@ function App() {
         </>
     )
 }
-
-const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
 
 
 export default App

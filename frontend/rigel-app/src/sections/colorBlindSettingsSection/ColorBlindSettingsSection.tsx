@@ -17,27 +17,29 @@ const ColorBlindSettingsSection = () => {
                 <CardContentWrapper>
                     <CardInfo>
                         <div>
-                            <h2>Индивидуальные настройки</h2>
-                            <p>Индивидуальные настройки цвета, яркости и контрастности изображения</p>
+                            <h2>Цветовое восприятие</h2>
+                            <p>Настройки цветого восприятия</p>
                         </div>
                         <Switch checked={isColorBlindMode} onChange={() => setIsColorBlindMode(!isColorBlindMode)}/>
                     </CardInfo>
-                    <TestImage src={testColorBlindImage} alt={"Тест на дальтонизм"}/>
-                    <ControlWrapper style={!isColorBlindMode ? {display: 'none'} : {}}>
-                        <div style={{display: 'flex', gap: '6px', alignItems: 'center'}}>
-                            <Button
-                                onClick={() => setColorBlindMode('deuteranopia')} {...colorBlindMode === 'deuteranopia' ? {type: 'primary'} : {}}>Деутеранопия</Button>
-                            <Button
-                                onClick={() => setColorBlindMode('protanopia')} {...colorBlindMode === 'protanopia' ? {type: 'primary'} : {}}>Протанопия</Button>
-                            <Button
-                                onClick={() => setColorBlindMode('tritanopia')} {...colorBlindMode === 'tritanopia' ? {type: 'primary'} : {}}>Тританопия</Button>
-                        </div>
-                        <div style={{display: 'flex', gap: '6px', alignItems: 'center', height: '100%'}}>
-                            <p>Степень дальтонизма:</p>
-                            {Array.from({length: 10}, (_, i) => i + 1).map((i) => <Button
-                                onClick={() => setColorBlindIntensity(i)} {...colorBlindIntensity === i ? {type: 'primary'} : {}}>{i}</Button>)}
-                        </div>
-                    </ControlWrapper>
+                    <div style={!isColorBlindMode ? {display: 'none'} : {}}>
+                        <TestImage src={testColorBlindImage} alt={"Тест на дальтонизм"}/>
+                        <ControlWrapper>
+                            <div style={{display: 'flex', gap: '6px', alignItems: 'center'}}>
+                                <Button
+                                    onClick={() => setColorBlindMode('deuteranopia')} {...colorBlindMode === 'deuteranopia' ? {type: 'primary'} : {}}>Деутеранопия</Button>
+                                <Button
+                                    onClick={() => setColorBlindMode('protanopia')} {...colorBlindMode === 'protanopia' ? {type: 'primary'} : {}}>Протанопия</Button>
+                                <Button
+                                    onClick={() => setColorBlindMode('tritanopia')} {...colorBlindMode === 'tritanopia' ? {type: 'primary'} : {}}>Тританопия</Button>
+                            </div>
+                            <div style={{display: 'flex', gap: '6px', alignItems: 'center', height: '100%'}}>
+                                <p>Степень дальтонизма:</p>
+                                {Array.from({length: 10}, (_, i) => i + 1).map((i) => <Button
+                                    onClick={() => setColorBlindIntensity(i)} {...colorBlindIntensity === i ? {type: 'primary'} : {}}>{i}</Button>)}
+                            </div>
+                        </ControlWrapper>
+                    </div>
                 </CardContentWrapper>
             </Card>
         </Section>

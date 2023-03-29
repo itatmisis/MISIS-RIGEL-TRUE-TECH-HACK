@@ -37,7 +37,7 @@ const SelectOptionsSection = () => {
                                 </SettingsButton>
                             </OptionCard>
                             <h3>Настроить
-                                цветочуствительность</h3>
+                                цветовосприятие</h3>
                             <p>Коррекция цвета, яркости и контраста изображения</p>
                         </OptionsWrapper>
                         <OptionsWrapper>

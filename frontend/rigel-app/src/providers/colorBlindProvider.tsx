@@ -12,7 +12,7 @@ export const ColorBlindContext = createContext<ColorBlindContextInterface>({
     colorBlindMode: 'tritanopia',
     setColorBlindMode: () => {
     },
-    colorBlindIntensity: 10,
+    colorBlindIntensity: 1,
     setColorBlindIntensity: () => {
     },
 });
@@ -21,7 +21,7 @@ export const ColorBlindProvider: React.FC = ({children}: any) => {
     const [colorBlindMode, setColorBlindMode] = useState<'deuteranopia' | 'protanopia' | 'tritanopia'>(
         'tritanopia',
     );
-    const [colorBlindIntensity, setColorBlindIntensity] = useState<number>(10);
+    const [colorBlindIntensity, setColorBlindIntensity] = useState<number>(1);
 
     return (
         <ColorBlindContext.Provider
