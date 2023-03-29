@@ -77,4 +77,4 @@ def epilepsy_task(video: np.ndarray, threshold: float = 0.6) -> np.ndarray:
         danger_mapping = getDangerMapping(image, I)
         strength = np.argwhere(danger_mapping[0] == image)[0]
         new.append(fade(image, strength))
-    return new
+    return np.array(new)
