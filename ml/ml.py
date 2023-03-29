@@ -61,8 +61,11 @@ def gaussian_blurring(image: np.ndarray, blur_strength=25) -> np.ndarray:
     return np.hstack((image, dst))
 
 
-def epilepsy_task(image: np.ndarray, threshold: float = 0.6) -> np.ndarray:
-    I = getI(image, threshold)
-    danger_mapping = getDangerMapping(image, I)
-    strength = np.argwhere(danger_mapping[0] == image)[0]
-    return darken(gaussian_blurring(image))
+def epilepsy_task(video: np.ndarray, threshold: float = 0.6) -> np.ndarray:
+    new = []
+    for image in video:
+        I = getI(image, threshold)
+        danger_mapping = getDangerMapping(image, I)
+        strength = np.argwhere(danger_mapping[0] == image)[0]
+        new.append(darken(gaussian_blurring(image)))
+    return new
