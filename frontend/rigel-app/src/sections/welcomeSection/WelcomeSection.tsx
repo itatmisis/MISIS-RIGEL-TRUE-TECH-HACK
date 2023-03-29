@@ -5,9 +5,10 @@ import helloCars from "../../assets/images/helloCars.png";
 import helloGrass from "../../assets/images/helloGrass.jpg";
 import helloConcert from "../../assets/images/helloCon.avif";
 import helloCity from "../../assets/images/helloCity.avif";
-const HelloSection = () => {
+
+const WelcomeSection = () => {
     return (
-        <Section className={"hello-section"}>
+        <Section className={"welcome-section"}>
             <Card>
                 <ThreeGrid>
                     <div id={'col1'}><HelloBox>Выбираем способ решения проблемы</HelloBox>
@@ -16,7 +17,8 @@ const HelloSection = () => {
                     <div id={'col2'} style={{display: 'flex', flexDirection: 'column', gap: '6px'}}>
                         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px'}}>
                             <GrassImg src={helloGrass} alt="helloGrass"/>
-                            <HelloBox style={{'height': '176px', width: '100%'}}>Настраиваем видео под свои потребности</HelloBox>
+                            <HelloBox style={{'height': '176px', width: '100%'}}>Настраиваем видео под свои
+                                потребности</HelloBox>
                         </div>
                         <ConcertImg src={helloConcert} alt="helloConcert"/>
                         <div style={{display: 'flex', justifyContent: 'center', height: '100%'}}>
@@ -94,10 +96,4 @@ const Col3Img = styled(BaseHelloImg)`
     `
 
 
-
-
-
-
-
-
-export default HelloSection
+export default WelcomeSection

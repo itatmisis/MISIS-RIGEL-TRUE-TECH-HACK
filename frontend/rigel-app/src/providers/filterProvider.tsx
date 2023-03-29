@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, {createContext, useState} from 'react';
 
 interface FilterContextInterface {
     contrast: number;
@@ -17,17 +17,23 @@ interface FilterContextInterface {
 
 export const FilterContext = createContext<FilterContextInterface>({
     contrast: 1,
-    setContrast: () => {},
+    setContrast: () => {
+    },
     brightness: 1,
-    setBrightness: () => {},
+    setBrightness: () => {
+    },
     saturation: 1,
-    setSaturation: () => {},
+    setSaturation: () => {
+    },
     hue: 0,
-    setHue: () => {},
-    handleResetColors: () => {},
+    setHue: () => {
+    },
+    handleResetColors: () => {
+    },
     getFilterEffect: () => '',
     isUsingFilter: false,
-    setIsUsingFilter: () => {},
+    setIsUsingFilter: () => {
+    },
 });
 
 export const FilterProvider: React.FC = ({children}: any) => {
@@ -46,18 +52,31 @@ export const FilterProvider: React.FC = ({children}: any) => {
 
     const getFilterEffect = () => {
         if (isUsingFilter)
-        return `contrast(${contrast}) brightness(${brightness}) saturate(${saturation}) hue-rotate(${hue}deg)`;
+            return `contrast(${contrast}) brightness(${brightness}) saturate(${saturation}) hue-rotate(${hue}deg)`;
         else
-        return '';
+            return '';
     }
 
     return (
         <FilterContext.Provider
-            value={{ contrast, setContrast, brightness, setBrightness, saturation, setSaturation, hue, setHue, handleResetColors, getFilterEffect, isUsingFilter, setIsUsingFilter }}
->
-    {children}
-    </FilterContext.Provider>
-);
+            value={{
+                contrast,
+                setContrast,
+                brightness,
+                setBrightness,
+                saturation,
+                setSaturation,
+                hue,
+                setHue,
+                handleResetColors,
+                getFilterEffect,
+                isUsingFilter,
+                setIsUsingFilter
+            }}
+        >
+            {children}
+        </FilterContext.Provider>
+    );
 };
 
 export const useFilter = () => {

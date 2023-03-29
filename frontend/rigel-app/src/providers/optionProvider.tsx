@@ -1,4 +1,5 @@
 import React from "react";
+
 interface IOptionProvider {
     isEpilepsyMode: boolean;
     setIsEpilepsyMode: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,11 +11,14 @@ interface IOptionProvider {
 
 export const OptionContext = React.createContext<IOptionProvider>({
     isEpilepsyMode: false,
-    setIsEpilepsyMode: () => {},
+    setIsEpilepsyMode: () => {
+    },
     isColorBlindMode: false,
-    setIsColorBlindMode: () => {},
+    setIsColorBlindMode: () => {
+    },
     isSpecialMode: false,
-    setIsSpecialMode: () => {},
+    setIsSpecialMode: () => {
+    },
 });
 
 export const OptionProvider: React.FC = ({children}: any) => {
@@ -24,7 +28,14 @@ export const OptionProvider: React.FC = ({children}: any) => {
 
     return (
         <OptionContext.Provider
-            value={{isEpilepsyMode, setIsEpilepsyMode, isColorBlindMode, setIsColorBlindMode, isSpecialMode, setIsSpecialMode}}
+            value={{
+                isEpilepsyMode,
+                setIsEpilepsyMode,
+                isColorBlindMode,
+                setIsColorBlindMode,
+                isSpecialMode,
+                setIsSpecialMode
+            }}
         >
             {children}
         </OptionContext.Provider>
