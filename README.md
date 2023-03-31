@@ -1,5 +1,11 @@
 # TRUE-TECH-HACK
 
+# О хакатоне
+Название команды: "MISIS - Rigel"
+
+Хакатон: TRUE-TECH-HACK (см. https://true-tech-hack.ru/)
+
+Организатор хакатона: МТС
 # Проблема
 АДАПТАЦИЯ ФИЛЬМОВ ДЛЯ ЛЮДЕЙ С ОСОБЫМИ ПОТРЕБНОСТЯМИ
 
@@ -95,9 +101,9 @@ $ python src/main.py -input Ваше_Видео
 *Все алгоритмы свободны от паттернов
 
 Участники:
-- Игорь Извеков (@izveigor) - Backend Developer (капитан)
-- Алексей Нижгородов (@nizhgo) - Frontend Developer
-- Коновалов Егор (@foldll) - Data Scientist
+- Игорь Извеков (Telegram: @izveigor, Github: izveigor) - Backend Developer (капитан)
+- Алексей Нижгородов (Telegram: @nizhgo, Github: nizhgo) - Frontend Developer
+- Коновалов Егор (Telegram: @foldll, Github: wtfnukee) - Data Scientist
 - Бобков Максим (@DeMaXiTo) - Дизайнер
 
 Все участники являются студентами "НИТУ МИСиС"
